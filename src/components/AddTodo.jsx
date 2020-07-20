@@ -7,17 +7,18 @@ class AddToDo extends React.Component {
       todoInput: ""
     };
   }
-  handleOnChange = (e) => {
+  handleOnChange = (event) => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [event.target.name]: event.target.value
     });
+    console.log(event.target.value)
   };
   handleSubmit = (event) => {
     event.preventDefault();
     console.log('submited')
     this.props.onSubmit({
       id: shortid.generate(),
-      text: this.state.text,
+      text: this.state.todoInput,
       complete: false,
     });
     //clear input after submit
