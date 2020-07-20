@@ -8,14 +8,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
+      items: []
     };
   }
+  addTodo =(todo)=>{
+    //copy items to new arry and add new todo to beginning of the list
+    this.setState({
+      items:[todo, ...this.state.items]
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Header></Header>
-        <AddTodo/>
+        <AddTodo onSubmit = {this.addTodo}/>
       </div>
     );
   }
