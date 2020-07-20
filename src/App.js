@@ -15,7 +15,7 @@ class App extends React.Component {
     };
   }
   addTodo =(todo)=>{
-    //copy items to new arry and add new todo to beginning of the list
+    // copy items to new arry and add new todo to beginning of the list
     this.setState({
       items:[todo, ...this.state.items]
     })
@@ -24,7 +24,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header></Header>
+        <Header/>
         <AddTodo onSubmit = {this.addTodo}/>
         <ul>
         {this.state.items.map(item =>(
