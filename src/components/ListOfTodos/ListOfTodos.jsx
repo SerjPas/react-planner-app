@@ -5,11 +5,13 @@ import CardContent from "@material-ui/core/CardContent";
 
 const ListOfTodo = (props) => {
     return (
-        <Card style={{margin: "10px"}}>
-            <CardContent>
-                <li>{props.text}</li>
-            </CardContent>
-        </Card>
+        <li>
+            <Card style={{margin: "10px"}}>
+                <CardContent>
+                    {props.text}
+                </CardContent>
+            </Card>
+        </li>
     );
 }
 export default ListOfTodo

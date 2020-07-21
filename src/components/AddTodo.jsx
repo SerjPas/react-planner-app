@@ -1,44 +1,64 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
+import Input from "@material-ui/core/Input";
 
 class AddToDo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            todoInput: ""
+            todoInput: "",
         };
     }
 
     handleOnChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-        console.log(event.target.value)
+        if (event.target.value !== "") {
+            this.setState({
+                [event.target.name]: event.target.value,
+            });
+        }
     };
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.onSubmit({
+        if (this.state.todoInput !== ""){
+            this.props.onSubmit({
             id: Date.now(),
             text: this.state.todoInput,
             complete: false,
         });
+        }
         //clear input after submit
-        event.target.reset()
+        this.setState({
+            todoInput: ""
+        });
     };
 
     render() {
         return (
-            <form className="form" onSubmit={this.handleSubmit}>
+            <form
+                className="form"
+                onSubmit={this.handleSubmit}
+                style={{margin: "20px"}}
+            >
                 <div>
                     <label htmlFor="todo"></label>
-                    <input
+                    <Input
                         id="todo"
                         name="todoInput"
-                        placeholder="My to do:"
-                        value={this.input}
+                        placeholder="My Todo:"
+                        value={this.state.todoInput}
                         onChange={this.handleOnChange}
+                        inputProps={{"aria-label": "description"}}
                     />
                 </div>
-                <button type="submit">+</button>
+                <Button
+                    placeholder="+"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    style={{marginLeft: "10px"}}
+                >
+                    +
+                </Button>
             </form>
         );
     }
