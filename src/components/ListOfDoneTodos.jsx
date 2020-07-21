@@ -1,10 +1,9 @@
-import React from "react";
+import React from 'react'
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 
-
-function ListOfTodo(props){
+function ListOfDoneTodos(props) {
     return (
         <li>
             <Card style={{margin: "10px"}}>
@@ -14,7 +13,7 @@ function ListOfTodo(props){
                     variant="contained"
                     color="primary"
                     style={{marginLeft: "10px"}}>
-                        done
+                        revert
                     </Button>
                     <span style = {{marginLeft: "20px"}}>{props.item.text}</span> 
                     <Button
@@ -26,6 +25,7 @@ function ListOfTodo(props){
                 </CardContent>
             </Card>
         </li>
-    );
+    )
 }
-export default ListOfTodo
+
+export default ListOfDoneTodos
