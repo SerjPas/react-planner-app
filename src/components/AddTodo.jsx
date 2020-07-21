@@ -3,65 +3,67 @@ import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 
 class AddToDo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            todoInput: "",
-        };
-    }
-
-    handleOnChange = (event) => {
-        if (event.target.value !== "") {
-            this.setState({
-                [event.target.name]: event.target.value,
-            });
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      todoInput: "",
     };
-    handleSubmit = (event) => {
-        event.preventDefault();
-        if (this.state.todoInput !== ""){
-            this.props.onSubmit({
-            id: Date.now(),
-            text: this.state.todoInput,
-            complete: false,
-        });
-        }
-        //clear input after submit
-        this.setState({
-            todoInput: ""
-        });
-    };
+  }
 
-    render() {
-        return (
-            <form
-                className="form"
-                onSubmit={this.handleSubmit}
-                style={{margin: "20px"}}
-            >
-                <div>
-                    <label htmlFor="todo"></label>
-                    <Input
-                        id="todo"
-                        name="todoInput"
-                        placeholder="My Todo:"
-                        value={this.state.todoInput}
-                        onChange={this.handleOnChange}
-                        inputProps={{"aria-label": "description"}}
-                    />
-                </div>
-                <Button
-                    placeholder="+"
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    style={{marginLeft: "10px"}}
-                >
-                    +
-                </Button>
-            </form>
-        );
+  handleOnChange(event) {
+    if (event.target.value !== "") {
+      this.setState({
+        todoInput: event.target.value,
+      });
     }
+  }
+  handleOnSubmit(event){
+    event.preventDefault();
+    if (this.state.todoInput !== "") {
+      this.props.onSubmit({
+        id: Date.now(),
+        text: this.state.todoInput,
+        complete: false,
+      });
+    }
+    //clear input after submit
+    this.setState({
+      todoInput: "",
+    });
+  }
+
+  render() {
+    return (
+      <form
+        className="form"
+        onSubmit={(event) => this.handleOnSubmit(event)}
+        style={{ margin: "20px" }}
+      >
+        <div>
+          <label htmlFor="todo"></label>
+          <Input
+            autoFocus ="true"
+            id="todo"
+            name="todoInput"
+            placeholder="My Todo:"
+            value={this.state.todoInput}
+            onChange={(event) => this.handleOnChange(event)}
+            inputProps={{ "aria-label": "description" }}
+            required
+          />
+        </div>
+        <Button
+          placeholder="+"
+          type="submit"
+          variant="contained"
+          color="primary"
+          style={{ marginLeft: "10px" }}
+        >
+          +
+        </Button>
+      </form>
+    );
+  }
 }
 
 export default AddToDo;
