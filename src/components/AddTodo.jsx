@@ -42,7 +42,7 @@ class AddToDo extends React.Component {
         <div>
           <label htmlFor="todo"></label>
           <Input
-            autoFocus ="true"
+            autoFocus
             id="todo"
             name="todoInput"
             placeholder="My Todo:"
