@@ -17,6 +17,7 @@ function ListOfDoneTodos(props) {
                     </Button>
                     <span style = {{marginLeft: "20px"}}>{props.item.text}</span> 
                     <Button
+                    onClick = {props.deleteTodo}
                     variant="contained"
                     color="primary"
                     style={{marginLeft: "auto"}}>

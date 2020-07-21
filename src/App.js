@@ -66,6 +66,15 @@ class App extends React.Component {
     this.needTodo();
     this.doneTodo();
   }
+  deleteTodo(id){
+    this.setState((state) => {
+      return {
+        items: state.items.filter(item => item.id !== id)
+      };
+    });
+    this.needTodo();
+    this.doneTodo();
+  }
 
   render() {
     return (
@@ -78,6 +87,7 @@ class App extends React.Component {
             <ListOfTodo
               key={item.id}
               item={item}
+              deleteTodo = {()=> this.deleteTodo(item.id)}
               onComplite={() => this.onComplite(item.id)}
             />
           ))}
@@ -89,6 +99,7 @@ class App extends React.Component {
             <ListOfDoneTodos
               key={item.id}
               item={item}
+              deleteTodo = {()=> this.deleteTodo(item.id)}
               onComplite={() => this.onComplite(item.id)}
             />
           ))}
