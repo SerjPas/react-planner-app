@@ -8,3 +8,6 @@ body{
 .border{
   border: 2px solid white;
 }
+.word-wrap {
+  word-wrap: break-word;
+}

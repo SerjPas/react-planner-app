@@ -24,6 +24,7 @@ class AddToDo extends React.Component {
         id: Date.now(),
         text: this.state.todoInput,
         complete: false,
+        favorite: false,
       });
     }
     //clear input after submit
