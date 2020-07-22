@@ -6,24 +6,15 @@ import Header from "./components/Header.jsx";
 import AddTodo from "./components/AddTodo.jsx";
 import ListOfTodo from "./components/ListOfTodos/ListOfTodos";
 import ListOfDoneTodos from "./components/ListOfDoneTodos.jsx";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import Typography from "@material-ui/core/Typography";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      favoritesTodo: []
     };
-  }
-
-  changeState(){
-    this.setState((state) => { 
-      return {
-        favoritesTodo: [...state.items.filter(item => item.favorite === true)]
-    };
-  });
   }
 
   addTodo(todo) {
@@ -43,7 +34,7 @@ class App extends React.Component {
               id: item.id,
               text: item.text,
               complete: !item.complete,
-              favorite: false,
+              favorite: item.favorite,
             };
           } else {
             return item;
@@ -53,15 +44,15 @@ class App extends React.Component {
     });
   }
 
-  deleteTodo(id){
+  deleteTodo(id) {
     this.setState((state) => {
       return {
-        items: state.items.filter(item => item.id !== id)
+        items: state.items.filter((item) => item.id !== id),
       };
     });
   }
 
-  addToFavorite(id){
+  addToFavorite(id) {
     this.setState((state) => {
       return {
         items: state.items.map((item) => {
@@ -75,54 +66,69 @@ class App extends React.Component {
           } else {
             return item;
           }
-        })
+        }),
       };
     });
-    this.changeState();
   }
-
 
   render() {
     return (
       <div className="App">
-        <Header />    
+        <Header />
         <AddTodo onSubmit={(todo) => this.addTodo(todo)} />
-        <div className= "border" style= {{margin:"25px"}}>Todos for today{this.state.items.filter(item => !item.complete).length}
-        <ul>
-          {this.state.items.filter(item =>item.favorite == true).map((item) => (
-            <ListOfTodo
-              key={item.id}
-              item={item}
-              addToFavorite = {() => this.addToFavorite(item.id)}
-              deleteTodo = {()=> this.deleteTodo(item.id)}
-              onComplite={() => this.onComplite(item.id)}>
-            </ListOfTodo>
-          ))}
-        </ul>
-        <ul>
-          {this.state.items.filter(item =>item.complete == false && item.favorite == false).map((item) => (
-            <ListOfTodo
-              key={item.id}
-              item={item}
-              addToFavorite = {() => this.addToFavorite(item.id)}
-              deleteTodo = {()=> this.deleteTodo(item.id)}
-              onComplite={() => this.onComplite(item.id)}>
-            </ListOfTodo>
-          ))}
-        </ul>
+        <div className="border" style={{ margin: "25px" }}>
+          <Typography>Todos for today</Typography> {this.state.items.filter((item) => !item.complete).length}
+          <ul>
+            {this.state.items
+              .filter((item) => !item.complete && item.favorite)
+              .map((item) => (
+                <ListOfTodo
+                  key={item.id}
+                  item={item}
+                  addToFavorite={() => this.addToFavorite(item.id)}
+                  deleteTodo={() => this.deleteTodo(item.id)}
+                  onComplite={() => this.onComplite(item.id)}
+                ></ListOfTodo>
+              ))}
+            {this.state.items
+              .filter((item) => !item.complete && !item.favorite)
+              .map((item) => (
+                <ListOfTodo
+                  key={item.id}
+                  item={item}
+                  addToFavorite={() => this.addToFavorite(item.id)}
+                  deleteTodo={() => this.deleteTodo(item.id)}
+                  onComplite={() => this.onComplite(item.id)}
+                ></ListOfTodo>
+              ))}
+          </ul>
         </div>
-          <div className = "border" style= {{margin:"25px"}}>Done Todos {this.state.items.filter(item => item.complete).length}
-        <ul>
-          {this.state.items.filter(item =>item.complete == true).map((item) => (
-            <ListOfDoneTodos
-              key={item.id}
-              item={item}
-              addToFavorite = {() => this.addToFavorite(item.id)}
-              deleteTodo = {()=> this.deleteTodo(item.id)}
-              onComplite={() => this.onComplite(item.id)}
-            />
-          ))}
-        </ul>
+        <div className="border" style={{ margin: "25px" }}>
+        <Typography>Done Todos</Typography>  {this.state.items.filter((item) => item.complete).length}
+          <ul>
+            {this.state.items
+              .filter((item) => item.complete && item.favorite)
+              .map((item) => (
+                <ListOfDoneTodos
+                  key={item.id}
+                  item={item}
+                  addToFavorite={() => this.addToFavorite(item.id)}
+                  deleteTodo={() => this.deleteTodo(item.id)}
+                  onComplite={() => this.onComplite(item.id)}
+                />
+              ))}
+            {this.state.items
+              .filter((item) => item.complete && !item.favorite)
+              .map((item) => (
+                <ListOfDoneTodos
+                  key={item.id}
+                  item={item}
+                  addToFavorite={() => this.addToFavorite(item.id)}
+                  deleteTodo={() => this.deleteTodo(item.id)}
+                  onComplite={() => this.onComplite(item.id)}
+                />
+              ))}
+          </ul>
         </div>
       </div>
     );

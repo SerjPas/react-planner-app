@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
+import Typography from "@material-ui/core/Typography";
 
 class AddToDo extends React.Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class AddToDo extends React.Component {
           color="primary"
           style={{ marginLeft: "10px" }}
         >
-          +
+         <Typography>+</Typography> 
         </Button>
       </form>
     );

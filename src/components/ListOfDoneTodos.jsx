@@ -25,8 +25,16 @@ function ListOfDoneTodos(props) {
             color="primary"
             aria-label="outlined primary button group"
           >
-            <Button><Typography>One</Typography></Button>
-            <Button><i className="far fa-star"></i></Button>
+            <Button>
+              <Typography>One</Typography>
+            </Button>
+
+            <Button color="primary" onClick={props.addToFavorite}>
+              <i className="far fa-star"
+              style={{ backgroundColor: props.item.favorite ? "yellow" : "" }}>
+              </i>
+            </Button>
+            
             <Button
               onClick={props.deleteTodo}
               variant="contained"
