@@ -21,7 +21,7 @@ class App extends React.Component {
   changeState(){
     this.setState((state) => { 
       return {
-        items: [...state.items.filter(item => item.favorite === true), ...state.items.filter(item => item.favorite === false)]
+        favoritesTodo: [...state.items.filter(item => item.favorite === true)]
     };
   });
   }
@@ -89,7 +89,18 @@ class App extends React.Component {
         <AddTodo onSubmit={(todo) => this.addTodo(todo)} />
         <div className= "border" style= {{margin:"25px"}}>Todos for today{this.state.items.filter(item => !item.complete).length}
         <ul>
-          {this.state.items.filter(item =>item.complete == false).map((item) => (
+          {this.state.items.filter(item =>item.favorite == true).map((item) => (
+            <ListOfTodo
+              key={item.id}
+              item={item}
+              addToFavorite = {() => this.addToFavorite(item.id)}
+              deleteTodo = {()=> this.deleteTodo(item.id)}
+              onComplite={() => this.onComplite(item.id)}>
+            </ListOfTodo>
+          ))}
+        </ul>
+        <ul>
+          {this.state.items.filter(item =>item.complete == false && item.favorite == false).map((item) => (
             <ListOfTodo
               key={item.id}
               item={item}
