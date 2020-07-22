@@ -4,7 +4,7 @@ import "./components/style.css";
 import "./components/ListOfTodos/style.css";
 import Header from "./components/Header.jsx";
 import AddTodo from "./components/AddTodo.jsx";
-import ListOfTodo from "./components/ListOfTodos/ListOfTodos";
+import ListOfTodo from "./components/ListOfTodos.jsx";
 import ListOfDoneTodos from "./components/ListOfDoneTodos.jsx";
 import Typography from "@material-ui/core/Typography";
 import "@fortawesome/fontawesome-free/css/all.min.css";

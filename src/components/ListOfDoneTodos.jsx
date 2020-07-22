@@ -26,7 +26,7 @@ function ListOfDoneTodos(props) {
             aria-label="outlined primary button group"
           >
             <Button>
-              <Typography>One</Typography>
+              <Typography>Edit</Typography>
             </Button>
 
             <Button color="primary" onClick={props.addToFavorite}>
