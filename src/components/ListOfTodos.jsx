@@ -1,11 +1,12 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-function AddtoFavorite(props) {
+function ListOfTodo(props) {
   return (
     <li>
       <Card style={{ margin: "10px" }}>
@@ -16,25 +17,35 @@ function AddtoFavorite(props) {
             color="primary"
             style={{ marginLeft: "10px" }}
           >
-            done
+            <Typography>
+              <i class="fas fa-check"></i>
+            </Typography>
           </Button>
-          <span style={{ marginLeft: "20px" }}>{props.item.text}</span>
+          <Typography className="word-wrap" style={{ marginLeft: "20px" }}>
+            {props.item.text}
+          </Typography>
           <ButtonGroup
-            style={{ marginLeft: "auto"}}
+            style={{ marginLeft: "auto" }}
             color="primary"
             aria-label="outlined primary button group"
           >
-            <Button>One</Button>
-            <Button
-              onClick = {props.addToFavorite}
-            ><i className="far fa-star"></i>
+            <Button>
+              <Typography>Edit</Typography>
             </Button>
+
+            <Button color="primary" onClick={props.addToFavorite}>
+              <i
+                className="far fa-star"
+                style={{ backgroundColor: props.item.favorite ? "yellow" : "" }}
+              ></i>
+            </Button>
+
             <Button
               onClick={props.deleteTodo}
               variant="contained"
               color="primary"
             >
-              delete
+              <Typography>X</Typography>
             </Button>
           </ButtonGroup>
         </CardContent>
@@ -42,4 +53,4 @@ function AddtoFavorite(props) {
     </li>
   );
 }
-export default AddtoFavorite;
+export default ListOfTodo;
