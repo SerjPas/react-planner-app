@@ -7,6 +7,7 @@ import ListOfTodo from "./components/ListOfTodos.jsx";
 import ListOfDoneTodos from "./components/ListOfDoneTodos.jsx";
 import Typography from "@material-ui/core/Typography";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Reset from "./components/Reset";
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +16,11 @@ class App extends React.Component {
       items: [],
       editedText: "",
     };
+  }
+  handleReset(){
+    this.setState({
+      items: [],
+    })
   }
 
   handleNewTodo(todo) {
@@ -96,9 +102,9 @@ class App extends React.Component {
       <div className="App">
         <Header />
         <AddTodo onSubmit={(todo) => this.handleNewTodo(todo)}/>
+        {this.state.items.length > 0 ? ( <Reset handleReset={(todo) => this.handleReset(todo)}  ></Reset>) : ("")}
         <div className="border" style={{margin: "25px"}}>
-          <Typography> Todos for today </Typography>{" "} {
-              this.state.items.filter((item) => !item.complete).length}
+          <Typography> Todos for today {this.state.items.filter((item) => !item.complete).length} </Typography>
             <ul> {
               this.state.items.filter((item) => !item.complete && item.favorite)
                 .map((item) => (
@@ -131,8 +137,7 @@ class App extends React.Component {
             </ul>
           </div>
           <div className="border" style={{margin: "25px"}}>
-            <Typography> Done Todos </Typography>{" "}
-            {this.state.items.filter((item) => item.complete).length}
+            <Typography> Done Todos   {this.state.items.filter((item) => item.complete).length} </Typography>
               <ul> 
                 {
                 this.state.items.filter((item) => item.complete && item.favorite)
