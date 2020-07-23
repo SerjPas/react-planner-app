@@ -7,16 +7,28 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
-// import CardActionArea from '@material-ui/core/CardActionArea';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/core/styles';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
+
 function ListOfDoneTodos(props) {
+  const classes = useStyles();
   return (
     <li>
       <Card style={{ margin: "10px" }}>
       <CardActionArea>
-          <CardContent >
-            <Typography variant="body2" color="textSecondary" component="p"style={{ textAlign:"left", textDecoration: "line-through" }} >
+          <CardContent style={{ backgroundColor:"#FCEF87" }}>
+            <Typography variant="body2" color="textSecondary" component="p" style={{textAlign:"left"}} >
               {props.item.editing ? (
                 <EditTodo
                   parentMainCallback={props.parentMainCallback}
@@ -25,8 +37,8 @@ function ListOfDoneTodos(props) {
                   editTodo={props.editTodo}
                   item={props.item}
                 ></EditTodo>
-              ) : (
-                props.item.text
+              ) : ( 
+                <span style={{textDecoration: "line-through" }} >{props.item.text}</span>
               )}
             </Typography>
           </CardContent>
@@ -35,7 +47,7 @@ function ListOfDoneTodos(props) {
           <Button
             size="small"
             onClick={props.onComplite}
-            variant="contained"
+            variant="outlined"
             color="primary"
             style={{ marginLeft: "10px" }}>
             <Typography><i className="fas fa-history"></i></Typography>
@@ -50,17 +62,15 @@ function ListOfDoneTodos(props) {
             </Button>
             <Button color="primary" onClick={props.addToFavorite}>
               <i className="far fa-star"
-              style={{ backgroundColor: props.item.favorite ? "yellow" : "" }}>
+              style={{ color: props.item.favorite ? "red" : "" }}>
               </i>
             </Button>     
-            <Button
+            </ButtonGroup>
+            <IconButton
               onClick={props.handleDeleteTodo}
-              variant="contained"
-              color="primary"
-            >
-              <Typography>X</Typography>
-            </Button>
-          </ButtonGroup>
+              aria-label="delete" className={classes.margin}>
+              <DeleteIcon fontSize="small"/>
+            </IconButton>    
         </CardActions>
       </Card>
     </li>

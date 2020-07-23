@@ -10,9 +10,11 @@ class EditTodo extends React.Component {
       editTodoInput: "",
     };
   }
-  sendBackData = () => {
+
+  sendBackData(){
     this.props.parentMainCallback(this.state.editTodoInput);
   };
+
   escFunction(event) {
     if (event.keyCode === 27) {
       this.props.editTodo()
@@ -51,14 +53,14 @@ class EditTodo extends React.Component {
           />
         </div>
         <Button
-          onClick={this.sendBackData}
+          onClick={() => this.sendBackData()}
           placeholder="+"
           type="submit"
           variant="contained"
           color="primary"
           style={{ marginLeft: "10px" }}
         >
-          <Typography>+</Typography>
+          <Typography><i className="fas fa-check"></i></Typography>
         </Button>
       </form>
     );

@@ -7,14 +7,27 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { makeStyles } from '@material-ui/core/styles';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+}));
+
 function ListOfTodo(props) {
+  const classes = useStyles();
   return (
     <li>
       <Card style={{ margin: "10px" }}>
         <CardActionArea>
-          <CardContent >
+          <CardContent style={{ backgroundColor:"#FCEF87" }} >
             <Typography variant="body1" color="text" component="p" className="word-wrap" style={{ textAlign:"left" }}>
               {props.item.editing ? (
                 <EditTodo
@@ -34,39 +47,31 @@ function ListOfTodo(props) {
           <Button
             size="small"
             color="primary"
+            variant="outlined"
             onClick={props.onComplite}
-            variant="contained"
-            style={{ marginRight: "auto" }}
-          >
+            style={{ marginRight: "auto" }}>
             <Typography>
-              <i className="fas fa-check"></i>
+              DONE
             </Typography>
           </Button>
           <ButtonGroup
             style={{ marginLeft: "auto" }}
             color="primary"
-            aria-label="outlined primary button group"
-          >
-            <Button
-            onClick={props.editTodo}>
+            aria-label="outlined primary button group">
+            <Button onClick={props.editTodo}>
               <Typography>Edit</Typography>
             </Button>
-
             <Button color="primary" onClick={props.addToFavorite}>
-              <i
-                className="far fa-star"
-                style={{ backgroundColor: props.item.favorite ? "yellow" : "" }}
-              ></i>
+              <i className="far fa-star"
+                style={{ color: props.item.favorite ? "red" : "" }}>
+              </i>
             </Button>
-
-            <Button
+            </ButtonGroup>
+            <IconButton
               onClick={props.handleDeleteTodo}
-              variant="contained"
-              color="primary"
-            >
-              <Typography>X</Typography>
-            </Button>
-          </ButtonGroup>
+              aria-label="delete" className={classes.margin}>
+              <DeleteIcon fontSize="small"/>
+            </IconButton>          
         </CardActions>
       </Card>
     </li>

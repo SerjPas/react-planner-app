@@ -1,0 +1,5 @@
+{
+  "database": {
+    "rules": "todo_database.json"
+  }
+}
