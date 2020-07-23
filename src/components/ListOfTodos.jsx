@@ -1,4 +1,5 @@
 import React from "react";
+import EditTodo from "./Edittodo";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -7,6 +8,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function ListOfTodo(props) {
+  console.log(props)
   return (
     <li>
       <Card style={{ margin: "10px" }}>
@@ -18,18 +20,18 @@ function ListOfTodo(props) {
             style={{ marginLeft: "10px" }}
           >
             <Typography>
-              <i class="fas fa-check"></i>
+              <i className="fas fa-check"></i>
             </Typography>
           </Button>
-          <Typography className="word-wrap" style={{ marginLeft: "20px" }}>
-            {props.item.text}
-          </Typography>
+          <span className="word-wrap" style={{ marginLeft: "20px" }}>
+            {props.item.editing? <EditTodo deleteTodo = {props.deleteTodo} onSubmit={props.onSubmit} editTodo = {props.editTodo} item = {props.item }></EditTodo> : props.item.text}
+          </span>
           <ButtonGroup
             style={{ marginLeft: "auto" }}
             color="primary"
             aria-label="outlined primary button group"
           >
-            <Button>
+            <Button onClick={props.editTodo}>
               <Typography>Edit</Typography>
             </Button>
 

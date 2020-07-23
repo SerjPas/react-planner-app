@@ -8,20 +8,35 @@ class EditTodo extends React.Component {
     super(props);
     this.state = {
       editTodoInput: "",
+      copyItem: props.item,
+
     };
   }
-  handleOnSubmit(event){
-    event.preventDefolt()
-    console.log("click")
-  }
-  handleOnChange(){
-    if (event.target.value !== "") {
-      this.setState({
-        editTodoInput: event.target.value,
-      });
+  escFunction(event){
+    if(event.keyCode === 27) {
+      //Do whatever when esc is pressed
     }
   }
 
+  handleOnSubmit(event) {
+    event.preventDefault();
+    console.log(this.state.editTodoInput);
+    this.props.deleteTodo(this.props.item.id)
+    this.props.onSubmit({
+      id: this.state.copyItem.id,
+      text: this.state.editTodoInput,
+      complete: this.state.copyItem.complete,
+      favorite: this.state.copyItem.favorite,
+      editing: this.state.copyItem.editing,
+    });
+    this.props.editTodo()
+  }
+
+  handleOnChange(event) {
+    this.setState({
+      editTodoInput: event.target.value,
+    }); 
+  }
 
   render() {
     return (
@@ -31,16 +46,15 @@ class EditTodo extends React.Component {
         style={{ margin: "20px" }}
       >
         <div>
-          <label htmlFor="todo"></label>
+          <label htmlFor="edit"></label>
           <Input
             autoFocus
-            id="todo"
+            id="edit"
             name="editTodoInput"
-            placeholder="My Todo:"
+            placeholder="Edit Todo:"
             value={this.state.editTodoInput}
             onChange={(event) => this.handleOnChange(event)}
             inputProps={{ "aria-label": "description" }}
-            required
           />
         </div>
         <Button
@@ -50,7 +64,7 @@ class EditTodo extends React.Component {
           color="primary"
           style={{ marginLeft: "10px" }}
         >
-         <Typography>+</Typography> 
+          <Typography>+</Typography>
         </Button>
       </form>
     );

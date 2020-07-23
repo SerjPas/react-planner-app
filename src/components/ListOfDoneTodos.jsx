@@ -25,7 +25,9 @@ function ListOfDoneTodos(props) {
             color="primary"
             aria-label="outlined primary button group"
           >
-            <Button>
+            <Button
+            onClick = {props.editTodo}
+            >
               <Typography>Edit</Typography>
             </Button>
 

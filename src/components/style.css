@@ -2,10 +2,10 @@
   display: flex;
   justify-content: center;
 }
-body{
+body {
   background-color: rgba(250, 246, 246, 0.94);
 }
-.border{
+.border {
   border: 2px solid white;
 }
 .word-wrap {

@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 
 class AddToDo extends React.Component {
   constructor(props) {
+    console.log("props")
+    console.log(props)
     super(props);
     this.state = {
       todoInput: "",
@@ -26,6 +28,7 @@ class AddToDo extends React.Component {
         text: this.state.todoInput,
         complete: false,
         favorite: false,
+        editing: false
       });
     }
     //clear input after submit

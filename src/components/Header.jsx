@@ -7,7 +7,7 @@ function Header(){
     <div>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="title" color="inherit">
+          <Typography variant="h5" color="inherit">
             My Todo:
           </Typography>
         </Toolbar>

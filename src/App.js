@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import "./components/style.css";
-import "./components/ListOfTodos/style.css";
 import Header from "./components/Header.jsx";
 import AddTodo from "./components/AddTodo.jsx";
 import ListOfTodo from "./components/ListOfTodos.jsx";
@@ -35,6 +34,7 @@ class App extends React.Component {
               text: item.text,
               complete: !item.complete,
               favorite: item.favorite,
+              editing: false
             };
           } else {
             return item;
@@ -58,10 +58,25 @@ class App extends React.Component {
         items: state.items.map((item) => {
           if (item.id === id) {
             return {
-              id: item.id,
-              text: item.text,
-              complete: item.complete,
+              ...item,
               favorite: !item.favorite,
+            };
+          } else {
+            return item;
+          }
+        }),
+      };
+    });
+  }
+  
+  editTodo(id){
+    this.setState((state) => {
+      return {
+        items: state.items.map((item) => {
+          if (item.id === id) {
+            return {
+            ...item,
+              editing: !item.editing
             };
           } else {
             return item;
@@ -75,7 +90,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        <AddTodo onSubmit={(todo) => this.addTodo(todo)} />
+        <AddTodo onSubmit={(todo) => this.addTodo(todo)}/>
         <div className="border" style={{ margin: "25px" }}>
           <Typography>Todos for today</Typography> {this.state.items.filter((item) => !item.complete).length}
           <ul>
@@ -83,9 +98,11 @@ class App extends React.Component {
               .filter((item) => !item.complete && item.favorite)
               .map((item) => (
                 <ListOfTodo
+                  onSubmit={(todo) => this.addTodo(todo)}
                   key={item.id}
                   item={item}
-                  addToFavorite={() => this.addToFavorite(item.id)}
+                  editTodo = {() => this.editTodo(item.id)}
+                  addToFavorite ={() => this.addToFavorite(item.id)}
                   deleteTodo={() => this.deleteTodo(item.id)}
                   onComplite={() => this.onComplite(item.id)}
                 ></ListOfTodo>
@@ -94,8 +111,10 @@ class App extends React.Component {
               .filter((item) => !item.complete && !item.favorite)
               .map((item) => (
                 <ListOfTodo
+                  onSubmit={(todo) => this.addTodo(todo)}
                   key={item.id}
                   item={item}
+                  editTodo = {() => this.editTodo(item.id)}
                   addToFavorite={() => this.addToFavorite(item.id)}
                   deleteTodo={() => this.deleteTodo(item.id)}
                   onComplite={() => this.onComplite(item.id)}
@@ -110,6 +129,7 @@ class App extends React.Component {
               .filter((item) => item.complete && item.favorite)
               .map((item) => (
                 <ListOfDoneTodos
+                  onSubmit={(todo) => this.addTodo(todo)}
                   key={item.id}
                   item={item}
                   addToFavorite={() => this.addToFavorite(item.id)}
@@ -121,6 +141,7 @@ class App extends React.Component {
               .filter((item) => item.complete && !item.favorite)
               .map((item) => (
                 <ListOfDoneTodos
+                  onSubmit={(todo) => this.addTodo(todo)}
                   key={item.id}
                   item={item}
                   addToFavorite={() => this.addToFavorite(item.id)}
