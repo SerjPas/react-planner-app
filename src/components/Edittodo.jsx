@@ -8,39 +8,32 @@ class EditTodo extends React.Component {
     super(props);
     this.state = {
       editTodoInput: "",
-      copyItem: props.item,
-
     };
   }
-  escFunction(event){
-    if(event.keyCode === 27) {
-      //Do whatever when esc is pressed
+  sendBackData = () => {
+    this.props.parentMainCallback(this.state.editTodoInput);
+  };
+  escFunction(event) {
+    if (event.keyCode === 27) {
+      this.props.editTodo()
     }
   }
 
   handleOnSubmit(event) {
     event.preventDefault();
-    console.log(this.state.editTodoInput);
-    this.props.deleteTodo(this.props.item.id)
-    this.props.onSubmit({
-      id: this.state.copyItem.id,
-      text: this.state.editTodoInput,
-      complete: this.state.copyItem.complete,
-      favorite: this.state.copyItem.favorite,
-      editing: this.state.copyItem.editing,
-    });
-    this.props.editTodo()
+    this.props.editTodo();
   }
 
   handleOnChange(event) {
     this.setState({
       editTodoInput: event.target.value,
-    }); 
+    });
   }
 
   render() {
     return (
       <form
+        onKeyDown = {(event) => this.escFunction(event)}
         className="form"
         onSubmit={(event) => this.handleOnSubmit(event)}
         style={{ margin: "20px" }}
@@ -51,13 +44,14 @@ class EditTodo extends React.Component {
             autoFocus
             id="edit"
             name="editTodoInput"
-            placeholder="Edit Todo:"
+            placeholder= {this.props.item.text}
             value={this.state.editTodoInput}
             onChange={(event) => this.handleOnChange(event)}
             inputProps={{ "aria-label": "description" }}
           />
         </div>
         <Button
+          onClick={this.sendBackData}
           placeholder="+"
           type="submit"
           variant="contained"

@@ -13,10 +13,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       items: [],
+      editedText: "",
     };
   }
 
-  addTodo(todo) {
+  handleNewTodo(todo) {
     this.setState((state) => {
       return {
         items: [todo, ...state.items],
@@ -30,11 +31,8 @@ class App extends React.Component {
         items: state.items.map((item) => {
           if (item.id === id) {
             return {
-              id: item.id,
-              text: item.text,
+              ...item,
               complete: !item.complete,
-              favorite: item.favorite,
-              editing: false
             };
           } else {
             return item;
@@ -44,7 +42,7 @@ class App extends React.Component {
     });
   }
 
-  deleteTodo(id) {
+  handleDeleteTodo(id) {
     this.setState((state) => {
       return {
         items: state.items.filter((item) => item.id !== id),
@@ -68,15 +66,16 @@ class App extends React.Component {
       };
     });
   }
-  
-  editTodo(id){
+
+  editTodo(id) {
     this.setState((state) => {
       return {
         items: state.items.map((item) => {
           if (item.id === id) {
             return {
-            ...item,
-              editing: !item.editing
+              ...item,
+              editing: !item.editing,
+              text: state.editedText,
             };
           } else {
             return item;
@@ -86,72 +85,90 @@ class App extends React.Component {
     });
   }
 
+  callbackMainFunction(childData) {
+    this.setState({
+      editedText: childData
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
-        <AddTodo onSubmit={(todo) => this.addTodo(todo)}/>
-        <div className="border" style={{ margin: "25px" }}>
-          <Typography>Todos for today</Typography> {this.state.items.filter((item) => !item.complete).length}
-          <ul>
-            {this.state.items
-              .filter((item) => !item.complete && item.favorite)
-              .map((item) => (
+        <AddTodo onSubmit={(todo) => this.handleNewTodo(todo)}/>
+        <div className="border" style={{margin: "25px"}}>
+          <Typography> Todos for today </Typography>{" "} {
+              this.state.items.filter((item) => !item.complete).length}
+            <ul> {
+              this.state.items.filter((item) => !item.complete && item.favorite)
+                .map((item) => (
                 <ListOfTodo
-                  onSubmit={(todo) => this.addTodo(todo)}
+                  parentMainCallback={(childData)=>this.callbackMainFunction(childData)}
+                  onSubmit={(todo) => this.handleNewTodo(todo)}
                   key={item.id}
                   item={item}
-                  editTodo = {() => this.editTodo(item.id)}
-                  addToFavorite ={() => this.addToFavorite(item.id)}
-                  deleteTodo={() => this.deleteTodo(item.id)}
-                  onComplite={() => this.onComplite(item.id)}
-                ></ListOfTodo>
-              ))}
-            {this.state.items
-              .filter((item) => !item.complete && !item.favorite)
-              .map((item) => (
-                <ListOfTodo
-                  onSubmit={(todo) => this.addTodo(todo)}
-                  key={item.id}
-                  item={item}
-                  editTodo = {() => this.editTodo(item.id)}
+                  editTodo={() => this.editTodo(item.id)}
                   addToFavorite={() => this.addToFavorite(item.id)}
-                  deleteTodo={() => this.deleteTodo(item.id)}
-                  onComplite={() => this.onComplite(item.id)}
-                ></ListOfTodo>
-              ))}
-          </ul>
+                  handleDeleteTodo={() => this.handleDeleteTodo(item.id)}
+                  onComplite={() => this.onComplite(item.id)}>
+                </ListOfTodo>
+                ))
+            } {
+                this.state.items.filter((item) => !item.complete && !item.favorite)
+                  .map((item) => (
+                  <ListOfTodo
+                    parentMainCallback={(childData)=>this.callbackMainFunction(childData)}
+                    onSubmit={(todo) => this.handleNewTodo(todo)}
+                    key={item.id}
+                    item={item}
+                    editTodo={() => this.editTodo(item.id)}
+                    addToFavorite={() => this.addToFavorite(item.id)}
+                    handleDeleteTodo={() => this.handleDeleteTodo(item.id)}
+                    onComplite={() => this.onComplite(item.id)}>
+                  </ListOfTodo>
+                  ))
+              }
+            </ul>
+          </div>
+          <div className="border" style={{margin: "25px"}}>
+            <Typography> Done Todos </Typography>{" "}
+            {this.state.items.filter((item) => item.complete).length}
+              <ul> 
+                {
+                this.state.items.filter((item) => item.complete && item.favorite)
+                  .map((item) => (
+                  <ListOfDoneTodos
+                    parentMainCallback={(childData)=>this.callbackMainFunction(childData)}
+                    onSubmit={(todo) => this.handleNewTodo(todo)}
+                    key={item.id}
+                    item={item}
+                    editTodo={() => this.editTodo(item.id)}
+                    addToFavorite={() => this.addToFavorite(item.id)}
+                    handleDeleteTodo={() => this.handleDeleteTodo(item.id)}
+                    onComplite={() => this.onComplite(item.id)}>
+                  </ListOfDoneTodos>
+                  ))
+              }
+              {
+                  this.state.items
+                    .filter((item) => item.complete && !item.favorite)
+                    .map((item) => (
+                      <ListOfDoneTodos
+                      parentMainCallback={(childData)=>this.callbackMainFunction(childData)}
+                      onSubmit={(todo) => this.handleNewTodo(todo)}
+                      key={item.id}
+                      item={item}
+                      editTodo={() => this.editTodo(item.id)}
+                      addToFavorite={() => this.addToFavorite(item.id)}
+                      handleDeleteTodo={() => this.handleDeleteTodo(item.id)}
+                      onComplite={() => this.onComplite(item.id)}>
+                    </ListOfDoneTodos>
+                    )
+                  )
+              }
+            </ul>
+          </div>
         </div>
-        <div className="border" style={{ margin: "25px" }}>
-        <Typography>Done Todos</Typography>  {this.state.items.filter((item) => item.complete).length}
-          <ul>
-            {this.state.items
-              .filter((item) => item.complete && item.favorite)
-              .map((item) => (
-                <ListOfDoneTodos
-                  onSubmit={(todo) => this.addTodo(todo)}
-                  key={item.id}
-                  item={item}
-                  addToFavorite={() => this.addToFavorite(item.id)}
-                  deleteTodo={() => this.deleteTodo(item.id)}
-                  onComplite={() => this.onComplite(item.id)}
-                />
-              ))}
-            {this.state.items
-              .filter((item) => item.complete && !item.favorite)
-              .map((item) => (
-                <ListOfDoneTodos
-                  onSubmit={(todo) => this.addTodo(todo)}
-                  key={item.id}
-                  item={item}
-                  addToFavorite={() => this.addToFavorite(item.id)}
-                  deleteTodo={() => this.deleteTodo(item.id)}
-                  onComplite={() => this.onComplite(item.id)}
-                />
-              ))}
-          </ul>
-        </div>
-      </div>
     );
   }
 }
