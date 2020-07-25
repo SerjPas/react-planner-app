@@ -4,7 +4,6 @@ import "./components/style.css";
 import Header from "./components/Header.jsx";
 import AddTodo from "./components/AddTodo.jsx";
 import ListOfTodo from "./components/ListOfTodos.jsx";
-import ListOfDoneTodos from "./components/ListOfDoneTodos.jsx";
 import Typography from "@material-ui/core/Typography";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Reset from "./components/Reset";
@@ -145,7 +144,7 @@ class App extends React.Component {
             {
               this.state.items.filter((item) => item.complete && item.favorite)
                 .map((item) => (
-                  <ListOfDoneTodos
+                  <ListOfTodo
                     parentMainCallback={(childData) => this.callbackMainFunction(childData)}
                     onSubmit={(todo) => this.handleNewTodo(todo)}
                     key={item.id}
@@ -154,14 +153,14 @@ class App extends React.Component {
                     addToFavorite={() => this.addToFavorite(item.id)}
                     handleDeleteTodo={() => this.handleDeleteTodo(item.id)}
                     onComplite={() => this.onComplite(item.id)}>
-                  </ListOfDoneTodos>
+                  </ListOfTodo>
                 ))
             }
             {
               this.state.items
                 .filter((item) => item.complete && !item.favorite)
                 .map((item) => (
-                  <ListOfDoneTodos
+                  <ListOfTodo
                     parentMainCallback={(childData) => this.callbackMainFunction(childData)}
                     onSubmit={(todo) => this.handleNewTodo(todo)}
                     key={item.id}
@@ -170,7 +169,7 @@ class App extends React.Component {
                     addToFavorite={() => this.addToFavorite(item.id)}
                     handleDeleteTodo={() => this.handleDeleteTodo(item.id)}
                     onComplite={() => this.onComplite(item.id)}>
-                  </ListOfDoneTodos>
+                  </ListOfTodo>
                 )
                 )
             }

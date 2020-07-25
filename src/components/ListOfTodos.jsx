@@ -29,16 +29,17 @@ function ListOfTodo(props) {
         <CardActionArea>
           <CardContent style={{ backgroundColor:"#FCEF87" }} >
             <Typography variant="body1" color="text" component="p" className="word-wrap" style={{ textAlign:"left" }}>
-              {props.item.editing ? (
+              {!props.item.editing ? 
+                props.item.complete ? (<span style={{textDecoration: "line-through" }}>{props.item.text}</span>) :
+                (<span>{props.item.text}</span>)
+              : (
                 <EditTodo
                   parentMainCallback={props.parentMainCallback}
                   handleDeleteTodo={props.handleDeleteTodo}
                   onSubmit={props.onSubmit}
                   editTodo={props.editTodo}
-                  item={props.item}
-                ></EditTodo>
-              ) : (
-                props.item.text
+                  item={props.item}>
+                  </EditTodo>
               )}
             </Typography>
           </CardContent>
@@ -51,7 +52,9 @@ function ListOfTodo(props) {
             onClick={props.onComplite}
             style={{ marginRight: "auto" }}>
             <Typography>
-              DONE
+            {props.item.complete ? (
+            <i className="fas fa-history"></i>
+            ): "DONE" }
             </Typography>
           </Button>
           <ButtonGroup
