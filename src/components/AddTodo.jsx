@@ -62,7 +62,7 @@ class AddToDo extends React.Component {
           color="primary"
           style={{ marginLeft: "10px" }}
         >
-          <Typography>+</Typography>
+          <Typography>Add Todo</Typography>
         </Button>
       </form>
     );

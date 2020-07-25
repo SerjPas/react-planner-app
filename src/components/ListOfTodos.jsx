@@ -24,13 +24,16 @@ const useStyles = makeStyles((theme) => ({
 function ListOfTodo(props) {
   const classes = useStyles();
   return (
-    <li>
-      <Card style={{ margin: "10px" }}>
+    <li style={{ alignItems: "center"}}>
+      <Card style={{ margin: "10px"}}>
         <CardActionArea>
           <CardContent style={{ backgroundColor:"#FCEF87" }} >
-            <Typography variant="body1" color="text" component="p" className="word-wrap" style={{ textAlign:"left" }}>
+            <div variant="body1" className="word-wrap" style={{ textAlign:"left" }}>
               {!props.item.editing ? 
-                props.item.complete ? (<span style={{textDecoration: "line-through" }}>{props.item.text}</span>) :
+                props.item.complete ? props.item.favorite ? 
+                (<span style={{textDecoration: "line-through", color: "red" }}>{props.item.text}</span>) : 
+                (<span style={{textDecoration: "line-through" }}>{props.item.text}</span>) :
+                props.item.favorite ? (<span style={{color: "red" }}>{props.item.text}</span>):
                 (<span>{props.item.text}</span>)
               : (
                 <EditTodo
@@ -41,7 +44,7 @@ function ListOfTodo(props) {
                   item={props.item}>
                   </EditTodo>
               )}
-            </Typography>
+            </div>
           </CardContent>
         </CardActionArea>
         <CardActions>
